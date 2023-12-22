@@ -26,3 +26,9 @@ jobs:
       run: |
         ./gradlew assembleDebug
         ./gradlew test
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: photon-auth
+        path: app/build/outputs/apk/release/
