@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.ahmrh.amryauth"
     compileSdk = 34
+    ndkVersion += "26.3.11579264"
 
     defaultConfig {
         applicationId = "com.ahmrh.amryauth"
@@ -23,6 +24,13 @@ android {
 
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags += "-std=c++11" // Optional C++ flags
+                version = "3.10.2"
+            }
         }
 
     }
@@ -76,6 +84,7 @@ chaquopy {
 //            // project directory:
 //            install("-r", "requirements.txt")
 //        }
+
     }
 }
 dependencies {
