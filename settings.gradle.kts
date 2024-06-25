@@ -17,4 +17,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Amry Auth"
 include(":app")
- 

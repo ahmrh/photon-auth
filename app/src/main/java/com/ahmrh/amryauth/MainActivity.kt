@@ -10,12 +10,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ahmrh.amryauth.common.TOTPFunction
 import com.ahmrh.amryauth.ui.navigation.Screen
 import com.ahmrh.amryauth.ui.screen.auth.AuthScreen
 import com.ahmrh.amryauth.ui.screen.auth.AuthViewModel
 import com.ahmrh.amryauth.ui.theme.AmryAuthTheme
-import com.chaquo.python.Python
-import com.chaquo.python.android.AndroidPlatform
+//import com.chaquo.python.Python
+//import com.chaquo.python.android.AndroidPlatform
 import com.google.android.gms.common.moduleinstall.ModuleInstall
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -23,8 +24,10 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +50,10 @@ class MainActivity : ComponentActivity() {
                 Log.e("MainActivity", "Failed to install module : $it")
             }
 
-        if( !Python.isStarted()) {
-            Python.start(AndroidPlatform(this))
-        }
+
+        val string = TOTPFunction.generate("otpauth://totp/:Amry%20Site?secret=kuaaaaaaad&user=amryyahya@mail.com")
+        Log.d("MainActivity", "totp string: $string")
+
 
         setContent {
             AmryAuthTheme {
@@ -98,7 +102,9 @@ class MainActivity : ComponentActivity() {
                 val key = Uri.parse(url).getQueryParameter("secret")
                 val username = Uri.parse(url).getQueryParameter("user")
                 Log.d("MainActivity", "url: $url, key: $key, user: $username")
-                insertAuth(key ?: "Unidentified Key", username ?: "Unnamed Entity")
+                insertAuth(
+                    key ?: "Unidentified Key", username ?: "Unnamed Entity"
+                )
             }
             .addOnCanceledListener {
                 // Task canceled
@@ -111,4 +117,11 @@ class MainActivity : ComponentActivity() {
             }
     }
 
+    companion object{
+        init {
+
+            System.loadLibrary("photon")
+        }
+
+    }
 }

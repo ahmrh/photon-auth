@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinTargetHierarchy.SourceSetTree.Companion.main
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.chaquo.python")
+//    id("com.chaquo.python")
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
 }
@@ -12,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.ahmrh.amryauth"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -26,14 +28,15 @@ android {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
 
-        externalNativeBuild {
-            cmake {
-                cppFlags += "-std=c++11" // Optional C++ flags
-                version = "3.10.2"
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags += "-std=c++11" // Optional C++ flags
+//                version = "3.10.2"
+//            }
+//        }
 
     }
+
 
     buildTypes {
         release {
@@ -63,30 +66,30 @@ android {
         }
     }
 }
-
-chaquopy {
-    defaultConfig {
-        version = "3.8"
-
-//        pip {
-//            // A requirement specifier, with or without a version number:
-//            install("scipy")
-//            install("requests==2.24.0")
 //
-//            // An sdist or wheel filename, relative to the project directory:
-//            install("MyPackage-1.2.3-py2.py3-none-any.whl")
+//chaquopy {
+//    defaultConfig {
+//        version = "3.8"
 //
-//            // A directory containing a setup.py, relative to the project
-//            // directory (must contain at least one slash):
-//            install("./MyPackage")
+////        pip {
+////            // A requirement specifier, with or without a version number:
+////            install("scipy")
+////            install("requests==2.24.0")
+////
+////            // An sdist or wheel filename, relative to the project directory:
+////            install("MyPackage-1.2.3-py2.py3-none-any.whl")
+////
+////            // A directory containing a setup.py, relative to the project
+////            // directory (must contain at least one slash):
+////            install("./MyPackage")
+////
+////            // "-r"` followed by a requirements filename, relative to the
+////            // project directory:
+////            install("-r", "requirements.txt")
+////        }
 //
-//            // "-r"` followed by a requirements filename, relative to the
-//            // project directory:
-//            install("-r", "requirements.txt")
-//        }
-
-    }
-}
+//    }
+//}
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
@@ -102,24 +105,36 @@ dependencies {
     val lifecycleVersion = "2.6.2"
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    )
     // ViewModel utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
+    )
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation(
+        "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    )
     // Lifecycles only (without ViewModel or LiveData)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     // Lifecycle utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
+    implementation(
+        "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion"
+    )
 
     // Saved state module for ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion")
+    implementation(
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
+    )
 
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(
+        platform("androidx.compose:compose-bom:2023.08.00")
+    )
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

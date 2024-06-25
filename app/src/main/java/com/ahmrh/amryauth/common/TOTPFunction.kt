@@ -1,6 +1,8 @@
 package com.ahmrh.amryauth.common
 
-import com.chaquo.python.Python
+import android.util.Log
+
+//import com.chaquo.python.Python
 
 object TOTPFunction {
 //    fun generate(key: String): String{
@@ -11,8 +13,9 @@ object TOTPFunction {
 //
 //        return "$TOTP"
 //    }
-
     fun generate(key: String): String{
-        return ""
+
+        return "${TOTP.getTOTP(key)}"
     }
+
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ahmrh.amryauth.common.TOTPFunction
 import com.ahmrh.amryauth.common.UiState
 import com.ahmrh.amryauth.data.Repository
 import com.ahmrh.amryauth.data.local.database.Auth
@@ -32,6 +33,10 @@ class AuthViewModel @Inject constructor(
     init {
         initUi()
         startTimer()
+
+
+        val string = TOTPFunction.generate("POFARSCDUPTMDH6JAOGLNDA2RYK77JVA")
+
     }
 
     private fun initUi(){
