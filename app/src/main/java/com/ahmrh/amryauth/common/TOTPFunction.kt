@@ -14,8 +14,8 @@ object TOTPFunction {
 //        return "$TOTP"
 //    }
     fun generate(key: String): String{
-
-        return "${TOTP.getTOTP(key)}"
+        val otp = TOTP.getTOTP(key).toString()
+        return otp.padStart(6, '0')
     }
 
 }
