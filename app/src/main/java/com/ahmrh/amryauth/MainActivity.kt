@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ahmrh.amryauth.common.Decipher
 import com.ahmrh.amryauth.common.TOTPFunction
 import com.ahmrh.amryauth.ui.navigation.Screen
 import com.ahmrh.amryauth.ui.screen.auth.AuthScreen
@@ -99,11 +100,17 @@ class MainActivity : ComponentActivity() {
                 val url = barcode.rawValue
 //                val url = "otpauth://totp/:Amry%20Site?secret=POFARSCDUPTMDH6JAOGLNDA2RYK77JVA&user=amryyahya@mail.com"
 
-                val key = Uri.parse(url).getQueryParameter("secret")
-                val username = Uri.parse(url).getQueryParameter("user")
-                Log.d("MainActivity", "url: $url, key: $key, user: $username")
+
+
+                val params = parseOtpAuthUrl(url!!)
+                Log.d("MainActivity", "url: $url params: $params")
+                val key = params["secret"]!!
+                val username = params["user"]!!
+                Log.d("MainActivity", "key: $key, user: $username")
+
+                val decryptedKey = Decipher.decryptAES(key)
                 insertAuth(
-                    key ?: "Unidentified Key", username ?: "Unnamed Entity"
+                    decryptedKey, username
                 )
             }
             .addOnCanceledListener {
@@ -117,11 +124,35 @@ class MainActivity : ComponentActivity() {
             }
     }
 
-    companion object{
-        init {
-
-            System.loadLibrary("photon")
+    fun parseOtpAuthUrl(url: String): Map<String, String> {
+        val parts = url.split("://", limit = 2)
+        if (parts.size != 2 || parts[0] != "otpauth") {
+            throw IllegalArgumentException("Invalid OTP Auth URL")
         }
 
+        val (type, rest) = parts[1].split("/", limit = 2)
+        val (label, params) = rest.split("?", limit = 2)
+
+        val result = mutableMapOf(
+            "type" to type,
+            "label" to label
+        )
+
+        // Split label into issuer and account if applicable
+        if (":" in label) {
+            val (issuer, account) = label.split(":", limit = 2)
+            result["issuer"] = issuer
+            result["account"] = account
+        }
+
+        // Parse parameters
+        val paramsList = params.split("&")
+        for (param in paramsList) {
+            val (key, value) = param.split("=", limit = 2)
+            result[key] = value
+        }
+
+        return result
     }
+
 }

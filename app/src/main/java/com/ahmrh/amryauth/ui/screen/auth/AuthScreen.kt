@@ -196,7 +196,6 @@ fun AuthList(
                             delay(1.seconds)
                             val time = System.currentTimeMillis() / 1000
                             ticks = time % maxTick
-                            Log.d("MainActivity", "Ticks: $ticks")
 
                             if(time % maxTick == 0L){
                                 Log.d("MainActivity", "Token changed to $token at $ticks")

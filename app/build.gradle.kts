@@ -19,6 +19,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -27,7 +28,6 @@ android {
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
-
 //        externalNativeBuild {
 //            cmake {
 //                cppFlags += "-std=c++11" // Optional C++ flags
@@ -39,12 +39,20 @@ android {
 
 
     buildTypes {
+        debug {
+
+            buildConfigField("String", "QRCODE_KEY", "\"3r2Si3uc7XSgh53o\"")
+            buildConfigField("String", "QRCODE_IV", "\"doBiHebupO9fTkKo\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "QRCODE_KEY", "\"3r2Si3uc7XSgh53o\"")
+            buildConfigField("String", "QRCODE_IV", "\"doBiHebupO9fTkKo\"")
         }
     }
     compileOptions {
@@ -55,6 +63,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
