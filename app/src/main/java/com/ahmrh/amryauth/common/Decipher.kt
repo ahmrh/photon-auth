@@ -13,8 +13,8 @@ import java.util.Base64
 object Decipher {
     fun decryptAES(cipherText: String): String {
 
-        val secretKey = "3r2Si3uc7XSgh53o".toByteArray(Charsets.UTF_8)
-        val initVector = "doBiHebupO9fTkKo".toByteArray(Charsets.UTF_8)
+        val secretKey = BuildConfig.QRCODE_KEY.toByteArray(Charsets.UTF_8)
+        val initVector = BuildConfig.QRCODE_IV.toByteArray(Charsets.UTF_8)
 
         try {
             val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
