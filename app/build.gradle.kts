@@ -7,6 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
 }
+
 android {
     namespace = "com.ahmrh.amryauth"
     compileSdk = 34
@@ -17,7 +18,7 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "4.0"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -2,6 +2,13 @@ package com.ahmrh.amryauth.common;
 
 import java.time.Instant;
 
+
+/*
+ * Author:
+ * Amry Yahya
+ * https://github.com/amryyahya
+ */
+
 class TOTP {
     private static final int D = 6;
     private static final int S = 8;
